@@ -1,151 +1,654 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Site de Empregos</title>
+  <title>Trab - Plataforma de Serviços</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
   <style>
+    :root {
+      --primary: #4f8cff;
+      --secondary: #7c3aed;
+      --bg-dark: #23272a;
+      --bg-light: #f5f7fa;
+      --text-dark: #22223b;
+      --text-light: #fff;
+      --radius: 16px;
+      --shadow: 0 4px 24px rgba(44,62,80,0.12);
+      --transition: 0.2s;
+    }
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f8fafc;
+      font-family: 'Inter', Arial, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-light);
       margin: 0;
       padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background var(--transition), color var(--transition);
     }
-    .container {
-      max-width: 600px;
-      margin: 40px auto;
-      background: #fff;
-      padding: 32px 28px;
-      border-radius: 16px;
-      box-shadow: 0 4px 24px rgba(46,204,64,0.08), 0 1.5px 8px rgba(255,140,0,0.10);
-      border: 1.5px solid #e9ecef;
+    header {
+      width: 100vw;
+      background: linear-gradient(90deg, var(--primary) 60%, var(--secondary) 100%);
+      color: var(--text-light);
+      padding: 0;
+      box-shadow: var(--shadow);
+      position: relative;
     }
-    h1 {
-      text-align: center;
-      color: #ffa500;
-      font-size: 2.1em;
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+    }
+    .logo {
+      font-size: 1.7em;
       font-weight: 700;
       letter-spacing: 1px;
-      margin-bottom: 28px;
-      text-shadow: 0 1px 0 #fffbe6, 0 2px 8px #2ecc4022;
-    }
-    .search {
-      display: flex;
-      margin-bottom: 24px;
-      gap: 0.5em;
-    }
-    .search input {
-      flex: 1;
-      padding: 12px 14px;
-      border: 1.5px solid #ffa500;
-      border-radius: 6px;
-      outline: none;
-      background: #fff;
-      font-size: 1em;
-      transition: border 0.2s;
-    }
-    .search input:focus {
-      border-color: #2ecc40;
-    }
-    .search button {
-      padding: 12px 24px;
-      border: none;
-      background: linear-gradient(90deg, #ffa500 60%, #2ecc40 100%);
       color: #fff;
-      border-radius: 6px;
-      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .menu {
+      display: flex;
+      gap: 32px;
+      font-size: 1.1em;
+    }
+    .menu a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color var(--transition);
+    }
+    .menu a:hover, .menu a:focus {
+      color: #e0e7ff;
+      outline: none;
+    }
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+    }
+    .nav-actions button {
+      background: #fff;
+      color: var(--primary);
+      border: none;
+      border-radius: 50px;
+      padding: 8px 18px;
       font-weight: 600;
       font-size: 1em;
-      box-shadow: 0 2px 8px rgba(255,140,0,0.08);
-      transition: background 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
     }
-    .search button:hover {
-      background: linear-gradient(90deg, #ff7f00 60%, #27ae60 100%);
-      box-shadow: 0 4px 16px rgba(46,204,64,0.12);
+    .nav-actions button.signup {
+      background: var(--secondary);
+      color: #fff;
     }
-    .jobs {
+    .nav-actions button:focus, .nav-actions button:hover {
+      background: var(--primary);
+      color: #fff;
+      outline: 2px solid #fff;
+    }
+    /* Hero Section */
+    .hero {
+      width: 100vw;
+      background: linear-gradient(90deg, var(--primary) 60%, var(--secondary) 100%);
+      color: #fff;
+      padding: 56px 0 32px 0;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-title {
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+    .hero-desc {
+      font-size: 1.2em;
+      margin-bottom: 32px;
+      color: #e0e7ff;
+    }
+    .hero-search {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .hero-search select, .hero-search input {
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      border: none;
+      font-size: 1em;
+      background: #fff;
+      color: var(--text-dark);
+      min-width: 160px;
+      margin-bottom: 8px;
+    }
+    .hero-search button {
+      background: var(--secondary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      padding: 12px 24px;
+      font-weight: 600;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+    .hero-search button:focus, .hero-search button:hover {
+      background: var(--primary);
+      outline: 2px solid #fff;
+    }
+    /* Como Funciona */
+    .steps {
+      max-width: 900px;
+      margin: 48px auto 32px auto;
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .step {
+      background: #fff;
+      color: var(--text-dark);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px 18px;
+      flex: 1 1 220px;
+      min-width: 220px;
+      text-align: center;
+      font-size: 1.1em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .step-icon {
+      font-size: 2.2em;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    /* Categorias */
+    .categorias-section {
+      max-width: 1200px;
+      margin: 0 auto 48px auto;
+      padding: 0 16px;
+    }
+    .categorias-title {
+      font-size: 1.5em;
+      font-weight: 600;
+      margin-bottom: 18px;
+      color: var(--primary);
+      text-align: center;
+    }
+    .categorias-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 22px;
+      margin-bottom: 12px;
+    }
+    .categoria {
+      background: #fff;
+      color: var(--text-dark);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 10px;
+      text-align: center;
+      font-size: 1em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: box-shadow var(--transition), background var(--transition);
+    }
+    .categoria:focus, .categoria:hover {
+      background: var(--primary);
+      color: #fff;
+      outline: 2px solid var(--secondary);
+    }
+    .categoria-icon {
+      font-size: 2em;
+      margin-bottom: 4px;
+      color: var(--secondary);
+    }
+    /* Seção Prestador */
+    .prestador-section {
+      max-width: 900px;
+      margin: 48px auto;
+      background: linear-gradient(90deg, var(--primary) 60%, var(--secondary) 100%);
+      color: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+    .prestador-section button {
+      background: #fff;
+      color: var(--primary);
+      border: none;
+      border-radius: 50px;
+      padding: 10px 28px;
+      font-weight: 600;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+    }
+    .prestador-section button:focus, .prestador-section button:hover {
+      background: var(--secondary);
+      color: #fff;
+      outline: 2px solid #fff;
+    }
+    /* Depoimentos */
+    .depoimentos-section {
+      max-width: 900px;
+      margin: 48px auto;
+      padding: 0 16px;
+      text-align: center;
+    }
+    .depoimentos-title {
+      font-size: 1.3em;
+      font-weight: 600;
+      margin-bottom: 18px;
+      color: var(--primary);
+    }
+    .depoimentos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 22px;
+    }
+    .depoimento {
+      background: #fff;
+      color: var(--text-dark);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 14px;
+      text-align: left;
+      font-size: 1em;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .depoimento .stars {
+      color: var(--primary);
+      font-size: 1.1em;
+    }
+    .depoimento .user {
+      font-weight: 600;
+      color: var(--secondary);
+      font-size: 1em;
+    }
+    /* Footer */
+    footer {
+      width: 100vw;
+      background: var(--bg-dark);
+      color: #fff;
+      padding: 32px 0 18px 0;
+      margin-top: 48px;
+      box-shadow: var(--shadow);
+    }
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 0 24px;
+    }
+    .footer-col {
+      flex: 1 1 180px;
+      min-width: 140px;
+      margin-bottom: 18px;
+    }
+    .footer-col h4 {
+      font-size: 1.1em;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+    .footer-col ul {
       list-style: none;
       padding: 0;
       margin: 0;
     }
-    .job {
-      background: #fff;
-      margin-bottom: 16px;
-      padding: 18px 16px;
-      border-radius: 10px;
-      border-left: 6px solid #ffa500;
-      box-shadow: 0 2px 12px rgba(46,204,64,0.06);
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      transition: box-shadow 0.2s, border-color 0.2s, background 0.2s;
+    .footer-col ul li {
+      margin-bottom: 8px;
     }
-    .job:hover {
-      box-shadow: 0 6px 24px rgba(46,204,64,0.13);
-      border-left: 6px solid #2ecc40;
-      background: #e6ffe6;
-    }
-    .job-title {
-      font-size: 1.15em;
-      font-weight: 700;
-      color: #ffa500;
-      margin-bottom: 2px;
-    }
-    .job-company {
-      color: #2ecc40;
-      font-weight: 600;
+    .footer-col ul li a {
+      color: #fff;
+      text-decoration: none;
       font-size: 1em;
+      transition: color var(--transition);
     }
-    .job span {
-      color: #444;
-      font-size: 0.98em;
+    .footer-col ul li a:hover, .footer-col ul li a:focus {
+      color: var(--primary);
+      outline: none;
+    }
+    .footer-social {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .footer-social a {
+      color: var(--secondary);
+      font-size: 1.5em;
+      transition: color var(--transition);
+    }
+    .footer-social a:hover, .footer-social a:focus {
+      color: var(--primary);
+      outline: none;
+    }
+    @media (max-width: 900px) {
+      .nav, .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+      }
+      .steps {
+        flex-direction: column;
+        gap: 18px;
+      }
+      .categorias-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      }
+      .depoimentos-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      }
+    }
+    @media (max-width: 600px) {
+      .nav, .footer-content {
+        padding: 8px 8px;
+      }
+      .hero {
+        padding: 32px 0 18px 0;
+      }
+      .hero-title {
+        font-size: 1.3em;
+      }
+      .steps {
+        gap: 12px;
+      }
+      .categorias-title, .depoimentos-title {
+        font-size: 1.1em;
+      }
     }
   </style>
 </head>
-<body>
-  <div class="container">
-    <h1>Buscar Emprego</h1>
-    <div class="search">
-      <input type="text" id="searchInput" placeholder="Digite o cargo ou empresa...">
-      <button onclick="searchJobs()">Buscar</button>
+
+  <body>
+    <!-- Modais -->
+    <div id="modalLogin" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3); z-index:200; align-items:center; justify-content:center;">
+      <div style="background:#fff; color:#22223b; padding:28px 22px; border-radius:16px; max-width:340px; margin:auto; box-shadow:0 2px 16px rgba(44,62,80,0.18);">
+        <h2 style="font-size:1.2em; margin-bottom:12px; color:#7c3aed;">Login</h2>
+        <form id="formLogin" onsubmit="loginUsuario(event)">
+          <input type="text" id="loginEmail" placeholder="E-mail" required style="width:100%; margin-bottom:10px; padding:8px; border-radius:8px; border:1px solid #7c3aed;">
+          <input type="password" id="loginSenha" placeholder="Senha" required style="width:100%; margin-bottom:10px; padding:8px; border-radius:8px; border:1px solid #7c3aed;">
+          <button type="submit" style="background:#7c3aed; color:#fff; border:none; border-radius:8px; padding:8px 16px; cursor:pointer; width:100%;">Entrar</button>
+          <button type="button" onclick="closeModal('modalLogin')" style="background:#4f8cff; color:#fff; border:none; border-radius:8px; padding:8px 16px; margin-top:8px; cursor:pointer; width:100%;">Cancelar</button>
+        </form>
+        <div id="loginMsg" style="margin-top:8px; color:#7c3aed;"></div>
+      </div>
     </div>
-    <ul class="jobs" id="jobsList">
-      <li class="job">
-        <span class="job-title">Desenvolvedor Frontend</span><br>
-        <span class="job-company">Empresa: Tech Solutions</span><br>
-        <span>Salário: R$ 5.000</span>
-      </li>
-      <li class="job">
-        <span class="job-title">Analista de Dados</span><br>
-        <span class="job-company">Empresa: DataCorp</span><br>
-        <span>Salário: R$ 4.800</span>
-      </li>
-      <li class="job">
-        <span class="job-title">Designer UX/UI</span><br>
-        <span class="job-company">Empresa: Criativa</span><br>
-        <span>Salário: R$ 5.200</span>
-      </li>
-    </ul>
-  </div>
+    <div id="modalCadastro" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3); z-index:201; align-items:center; justify-content:center;">
+      <div style="background:#fff; color:#22223b; padding:28px 22px; border-radius:16px; max-width:340px; margin:auto; box-shadow:0 2px 16px rgba(44,62,80,0.18);">
+        <h2 style="font-size:1.2em; margin-bottom:12px; color:#4f8cff;">Cadastro</h2>
+        <form id="formCadastro" onsubmit="cadastrarUsuario(event)">
+          <input type="text" id="cadastroNome" placeholder="Nome" required style="width:100%; margin-bottom:10px; padding:8px; border-radius:8px; border:1px solid #4f8cff;">
+          <input type="email" id="cadastroEmail" placeholder="E-mail" required style="width:100%; margin-bottom:10px; padding:8px; border-radius:8px; border:1px solid #4f8cff;">
+          <input type="password" id="cadastroSenha" placeholder="Senha" required style="width:100%; margin-bottom:10px; padding:8px; border-radius:8px; border:1px solid #4f8cff;">
+          <button type="submit" style="background:#4f8cff; color:#fff; border:none; border-radius:8px; padding:8px 16px; cursor:pointer; width:100%;">Cadastrar</button>
+          <button type="button" onclick="closeModal('modalCadastro')" style="background:#7c3aed; color:#fff; border:none; border-radius:8px; padding:8px 16px; margin-top:8px; cursor:pointer; width:100%;">Cancelar</button>
+        </form>
+        <div id="cadastroMsg" style="margin-top:8px; color:#4f8cff;"></div>
+      </div>
+    </div>
+  <header>
+    <nav class="nav" aria-label="Navegação principal">
+      <div class="logo" aria-label="Logo Trab">
+        <span>Trab</span>
+      </div>
+      <div class="menu">
+        <a href="#como-funciona">Como Funciona</a>
+        <a href="#categorias">Categorias</a>
+        <a href="#prestador">Seja Prestador</a>
+        <a href="#depoimentos">Depoimentos</a>
+      </div>
+      <div class="nav-actions">
+        <button onclick="openModal('modalLogin')">Login</button>
+        <button class="signup" onclick="openModal('modalCadastro')">Cadastre-se</button>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero" id="hero">
+    <h1 class="hero-title">Encontre o profissional certo para cada serviço</h1>
+    <p class="hero-desc">Conectamos você aos melhores prestadores da sua região, de forma rápida e segura.</p>
+    <form class="hero-search" aria-label="Busca de serviços" onsubmit="buscarServicos(event)">
+      <select id="buscaCategoria" aria-label="Categoria">
+        <option value="">Categoria</option>
+        <option>Reparos</option>
+        <option>Pintura</option>
+        <option>Elétrica</option>
+        <option>Limpeza</option>
+        <option>Jardinagem</option>
+        <option>Babá</option>
+        <option>Montagem</option>
+        <option>Informática</option>
+        <option>Transporte</option>
+        <option>Cuidados Pessoais</option>
+        <option>Aulas</option>
+        <option>Outros</option>
+      </select>
+      <input type="text" id="buscaLocal" placeholder="Digite sua localização" aria-label="Localização">
+      <button type="submit">Buscar</button>
+    </form>
+    <div id="resultadosBusca" style="max-width:600px; margin:0 auto; margin-top:18px;"></div>
+  </section>
+
+  <section class="steps" id="como-funciona">
+    <div class="step">
+      <span class="step-icon" aria-label="Buscar">🔎</span>
+      <span>1. Busque o serviço desejado</span>
+    </div>
+    <div class="step">
+      <span class="step-icon" aria-label="Escolher">👤</span>
+      <span>2. Escolha o profissional ideal</span>
+    </div>
+    <div class="step">
+      <span class="step-icon" aria-label="Solicitar">✅</span>
+      <span>3. Solicite e avalie o serviço</span>
+    </div>
+  </section>
+
+  <section class="categorias-section" id="categorias">
+    <h2 class="categorias-title">Categorias de Serviços</h2>
+    <div class="categorias-grid">
+      <div class="categoria" tabindex="0"><span class="categoria-icon" aria-label="Reparos">🛠️</span>Reparos</div>
+      <div class="categoria" tabindex="0"><span class="categoria-icon" aria-label="Pintura">🎨</span>Pintura</div>
+      <div class="categoria" tabindex="0"><span class="categoria-icon" aria-label="Elétrica">💡</span>Elétrica</div>
+      <div class="categoria" tabindex="0"><span class="categoria-icon" aria-label="Limpeza">🧹</span>Limpeza</div>
+      <div class="categoria" tabindex="0"><span class="categoria-icon" aria-label="Jardinagem">🌱</span>Jardinagem</div>
+      <div class="categoria" tabindex="0"><span class="categoria-icon" aria-label="Babá">🧒</span>Babá</div>
+      <div class="categoria" tabindex="0"><span class="categoria-icon" aria-label="Montagem">🔩</span>Montagem</div>
+      <div class="categoria" tabindex="0"><span class="categoria-icon" aria-label="Informática">💻</span>Informática</div>
+      <div class="categoria" tabindex="0"><span class="categoria-icon" aria-label="Transporte">🚚</span>Transporte</div>
+      <div class="categoria" tabindex="0"><span class="categoria-icon" aria-label="Cuidados Pessoais">🧖‍♂️</span>Cuidados Pessoais</div>
+      <div class="categoria" tabindex="0"><span class="categoria-icon" aria-label="Aulas">📚</span>Aulas</div>
+      <div class="categoria" tabindex="0"><span class="categoria-icon" aria-label="Outros">🔎</span>Outros</div>
+    </div>
+  </section>
+
+  <section class="prestador-section" id="prestador">
+    <h2>É profissional? Cadastre-se e receba solicitações!</h2>
+    <p>Faça parte da Trab e aumente sua renda conectando-se com clientes da sua região.</p>
+    <button>Quero ser prestador</button>
+  </section>
+
+  <section class="depoimentos-section" id="depoimentos">
+    <h2 class="depoimentos-title">Depoimentos</h2>
+    <div class="depoimentos-grid">
+      <div class="depoimento">
+        <span class="stars">★★★★★</span>
+        <span>“Encontrei um eletricista excelente em minutos!”</span>
+        <span class="user">Carlos, Cliente</span>
+      </div>
+      <div class="depoimento">
+        <span class="stars">★★★★★</span>
+        <span>“Aumentei minha renda como prestador na Trab.”</span>
+        <span class="user">Juliana, Prestadora</span>
+      </div>
+      <div class="depoimento">
+        <span class="stars">★★★★☆</span>
+        <span>“Serviço rápido e seguro, recomendo!”</span>
+        <span class="user">Ana, Cliente</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-col">
+        <h4>Trab</h4>
+        <ul>
+          <li><a href="#hero">Início</a></li>
+          <li><a href="#como-funciona">Como Funciona</a></li>
+          <li><a href="#categorias">Categorias</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Links Úteis</h4>
+        <ul>
+          <li><a href="#prestador">Seja Prestador</a></li>
+          <li><a href="#depoimentos">Depoimentos</a></li>
+          <li><a href="#">Política de Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="mailto:contato@trab.com">contato@trab.com</a></li>
+          <li><a href="#">Suporte</a></li>
+        </ul>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">&#x1F47E;</a>
+          <a href="#" aria-label="Facebook">&#x1F426;</a>
+          <a href="#" aria-label="WhatsApp">&#x1F4F1;</a>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:18px; color:#7c3aed; font-size:0.95em;">© 2025 Trab. Todos os direitos reservados.</div>
+  </footer>
   <script>
-    function searchJobs() {
-      const input = document.getElementById('searchInput').value.toLowerCase();
-      const jobs = document.querySelectorAll('.job');
-      if (input === "") {
-        jobs.forEach(job => {
-          job.style.display = '';
-        });
-      } else {
-        jobs.forEach(job => {
-          const text = job.textContent.toLowerCase();
-          job.style.display = text.includes(input) ? '' : 'none';
-        });
-      }
+    // Simulação de dados e backend
+    let usuarios = [];
+    let logado = null;
+    let servicos = [
+      { nome: 'Encanador', categoria: 'Reparos', local: 'São Paulo', descricao: 'Troca de torneira, vazamentos', avaliacao: 4.8 },
+      { nome: 'Pintor', categoria: 'Pintura', local: 'Rio de Janeiro', descricao: 'Pintura residencial', avaliacao: 4.6 },
+      { nome: 'Eletricista', categoria: 'Elétrica', local: 'Belo Horizonte', descricao: 'Instalação de tomadas', avaliacao: 4.9 },
+      { nome: 'Diarista', categoria: 'Limpeza', local: 'Curitiba', descricao: 'Limpeza residencial', avaliacao: 4.7 },
+      { nome: 'Jardineiro', categoria: 'Jardinagem', local: 'Porto Alegre', descricao: 'Corte de grama', avaliacao: 4.5 },
+      { nome: 'Babá', categoria: 'Babá', local: 'Recife', descricao: 'Cuidados infantis', avaliacao: 4.8 },
+      { nome: 'Montador', categoria: 'Montagem', local: 'Brasília', descricao: 'Montagem de móveis', avaliacao: 4.6 },
+      { nome: 'Técnico', categoria: 'Informática', local: 'Salvador', descricao: 'Manutenção de computadores', avaliacao: 4.7 },
+      { nome: 'Motorista', categoria: 'Transporte', local: 'Fortaleza', descricao: 'Transporte executivo', avaliacao: 4.9 },
+      { nome: 'Cabeleireiro', categoria: 'Cuidados Pessoais', local: 'Manaus', descricao: 'Cortes e tratamentos', avaliacao: 4.8 },
+      { nome: 'Professor', categoria: 'Aulas', local: 'Belém', descricao: 'Aulas particulares', avaliacao: 4.7 },
+      { nome: 'Outros', categoria: 'Outros', local: 'Goiânia', descricao: 'Serviços diversos', avaliacao: 4.5 }
+    ];
+
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
     }
 
-    // Chama a função sempre que digitar ou apagar algo
-    document.getElementById('searchInput').addEventListener('input', searchJobs);
+    function cadastrarUsuario(event) {
+      event.preventDefault();
+      const nome = document.getElementById('cadastroNome').value.trim();
+      const email = document.getElementById('cadastroEmail').value.trim();
+      const senha = document.getElementById('cadastroSenha').value;
+      if (!nome || !email || !senha) return;
+      if (usuarios.find(u => u.email === email)) {
+        document.getElementById('cadastroMsg').textContent = 'E-mail já cadastrado.';
+        return;
+      }
+      usuarios.push({ nome, email, senha });
+      document.getElementById('cadastroMsg').textContent = 'Cadastro realizado com sucesso!';
+      setTimeout(()=>{
+        document.getElementById('cadastroMsg').textContent = '';
+        closeModal('modalCadastro');
+      }, 1500);
+      document.getElementById('formCadastro').reset();
+    }
+
+    function loginUsuario(event) {
+      event.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const senha = document.getElementById('loginSenha').value;
+      const user = usuarios.find(u => u.email === email && u.senha === senha);
+      if (user) {
+        logado = user;
+        document.getElementById('loginMsg').textContent = 'Login realizado!';
+        setTimeout(()=>{
+          document.getElementById('loginMsg').textContent = '';
+          closeModal('modalLogin');
+        }, 1200);
+      } else {
+        document.getElementById('loginMsg').textContent = 'Usuário ou senha inválidos.';
+      }
+      document.getElementById('formLogin').reset();
+    }
+
+    function buscarServicos(event) {
+      event.preventDefault();
+      const categoria = document.getElementById('buscaCategoria').value;
+      const local = document.getElementById('buscaLocal').value.trim().toLowerCase();
+      let resultados = servicos.filter(s => {
+        let catOk = !categoria || s.categoria === categoria;
+        let locOk = !local || s.local.toLowerCase().includes(local);
+        return catOk && locOk;
+      });
+      let html = '';
+      if (resultados.length) {
+        html += '<h3 style="color:#4f8cff; margin-bottom:10px;">Profissionais encontrados:</h3>';
+        html += '<ul style="list-style:none; padding:0;">';
+        resultados.forEach(s => {
+          html += `<li style='background:#fff; color:#22223b; border-radius:12px; box-shadow:0 2px 12px rgba(44,62,80,0.10); margin-bottom:12px; padding:16px;'>
+            <b>${s.nome}</b> <span style='color:#7c3aed;'>(${s.categoria})</span><br>
+            <span>Local: ${s.local}</span><br>
+            <span>${s.descricao}</span><br>
+            <span>Avaliação: <span style='color:#4f8cff;'>${'★'.repeat(Math.round(s.avaliacao))}${'☆'.repeat(5-Math.round(s.avaliacao))}</span> (${s.avaliacao})</span>
+          </li>`;
+        });
+        html += '</ul>';
+      } else {
+        html = '<div style="color:#7c3aed; margin-top:12px;">Nenhum profissional encontrado.</div>';
+      }
+      document.getElementById('resultadosBusca').innerHTML = html;
+    }
+
+    // Exemplo de integração backend (fetch)
+    // async function buscarServicosBackend(categoria, local) {
+    //   const resp = await fetch(`/api/servicos?categoria=${categoria}&local=${local}`);
+    //   const data = await resp.json();
+    //   // renderizar resultados...
+    // }
   </script>
 </body>
 </html>
